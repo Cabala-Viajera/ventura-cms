@@ -11,6 +11,11 @@ const postType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'description',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'slug',
       type: 'slug',
       options: {source: 'title'},
@@ -23,7 +28,7 @@ const postType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'image',
+      name: 'imgUrl',
       type: 'image',
     }),
     defineField({
