@@ -41,9 +41,29 @@ const postType = defineType({
     }),
 
     defineField({
-      name: 'body',
+      name: 'content',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [
+        {
+          type: 'block',
+        },
+        // this is our first custom block which will make it possible to add block images with alt text fields into your portable text
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              description: 'Important for SEO and accessiblity.',
+              options: {
+                isHighlighted: true,
+              },
+            },
+          ],
+        },
+      ],
     }),
   ],
 })
