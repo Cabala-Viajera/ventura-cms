@@ -7,8 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'Cabala Viajera',
 
-  projectId: 'o1spw459',
-  dataset: 'development',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || '',
+  dataset: process.env.SANITY_STUDIO_DATASET || '',
 
   plugins: [structureTool(), visionTool()],
 
