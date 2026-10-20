@@ -19,8 +19,9 @@ jobs:
       - run: npm ci
 
       - name: Deploy Studio
-        run: npx sanity deploy
+        run: npm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
           SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
