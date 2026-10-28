@@ -30,11 +30,11 @@ access to the project.
 
 Sanity automatically selects the environment file for each command:
 
-| Command | Environment file |
-| --- | --- |
-| `npm run dev` | `.env.development` |
-| `npm run build` | `.env.production` |
-| `npm run deploy` | `.env.production` |
+| Command          | Environment file   |
+| ---------------- | ------------------ |
+| `npm run dev`    | `.env.development` |
+| `npm run build`  | `.env.production`  |
+| `npm run deploy` | `.env.production`  |
 
 Create environment-specific files from the committed `.env.example`:
 
@@ -43,12 +43,12 @@ cp .env.example .env.development
 cp .env.example .env.production
 ```
 
-| Variable | Purpose |
-| --- | --- |
-| `SANITY_STUDIO_PROJECT_ID` | Sanity project ID used by the Studio and CLI |
-| `SANITY_STUDIO_DATASET` | Dataset used by the Studio and CLI |
-| `SANITY_STUDIO_APP_ID` | Studio app ID used for Sanity hosting deployment |
-| `SANITY_API_TOKEN` | Optional token for authenticated scripts; never expose it to client code |
+| Variable                   | Purpose                                                                  |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `SANITY_STUDIO_PROJECT_ID` | Sanity project ID used by the Studio and CLI                             |
+| `SANITY_STUDIO_DATASET`    | Dataset used by the Studio and CLI                                       |
+| `SANITY_STUDIO_APP_ID`     | Studio app ID used for Sanity hosting deployment                         |
+| `SANITY_API_TOKEN`         | Optional token for authenticated scripts; never expose it to client code |
 
 Project ID and dataset have no hardcoded defaults. Set them explicitly for
 each environment, and set the app ID for deployment. The production
@@ -67,14 +67,14 @@ browser.
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start the local Studio development server |
-| `npm run build` | Build the Studio into `dist/` |
-| `npm run start` | Serve the built Studio locally |
-| `npm run deploy` | Deploy the Studio to Sanity hosting |
+| Command                  | Purpose                                       |
+| ------------------------ | --------------------------------------------- |
+| `npm run dev`            | Start the local Studio development server     |
+| `npm run build`          | Build the Studio into `dist/`                 |
+| `npm run start`          | Serve the built Studio locally                |
+| `npm run deploy`         | Deploy the Studio to Sanity hosting           |
 | `npm run deploy-graphql` | Deploy the GraphQL API for the current schema |
-| `npx eslint .` | Lint the repository |
+| `npx eslint .`           | Lint the repository                           |
 
 There is no test suite configured. Use lint and a production build to check
 code and schema changes before deployment.
@@ -85,11 +85,16 @@ The `post` schema contains title, description, country, slug, publication date,
 main and thumbnail images, and Portable Text content with inline images and
 alternative text.
 
-- New standalone posts default to Spanish (`es`). The language field is required
-  and read-only in the editor.
-- Create linked English (`en`) translations using the internationalization
-  plugin's document language selector. Translate and review the copied fields
-  before publishing; each language is published independently.
+- Choose the Español or English Post template when creating a post to initialize
+  its language (`es` or `en`). The generic Post template is hidden. You can change
+  the language in the required Language dropdown before publishing. While publication state
+  loads, the field is disabled. A published post with an assigned language keeps
+  that language, including when editing its draft, to preserve its URL.
+- Create and publish each language independently; a counterpart is optional.
+  The internationalization plugin can still create linked translations for SEO.
+  Translate and review all copied fields before publishing.
+- Existing posts without a language can be classified in the editor and published
+  again. The website hides posts without an explicit `es` or `en` language.
 - Slugs must be unique within each language. Reserved application paths and
   slugs containing `/` or `.` are rejected. During rollout, posts without a
   language are treated as Spanish by slug validation and the audit.
@@ -115,15 +120,15 @@ maintained in the separate website repository.
 
 ## Project structure
 
-| Path | Purpose |
-| --- | --- |
-| `sanity.config.ts` | Studio configuration, plugins, and schema registration |
-| `sanity.cli.ts` | CLI project, dataset, and deployment configuration |
-| `schemaTypes/index.ts` | Registry of document schemas |
-| `schemaTypes/schemas/Post/` | Post schema and barrel export |
-| `scripts/audit-i18n.ts` | Read-only post language and slug audit |
-| `migrations/mark-posts-spanish/` | Backfill missing post languages with `es` |
-| `docs/localization.md` | Localization rollout and editorial instructions |
+| Path                             | Purpose                                                |
+| -------------------------------- | ------------------------------------------------------ |
+| `sanity.config.ts`               | Studio configuration, plugins, and schema registration |
+| `sanity.cli.ts`                  | CLI project, dataset, and deployment configuration     |
+| `schemaTypes/index.ts`           | Registry of document schemas                           |
+| `schemaTypes/schemas/Post/`      | Post schema and barrel export                          |
+| `scripts/audit-i18n.ts`          | Read-only post language and slug audit                 |
+| `migrations/mark-posts-spanish/` | Backfill missing post languages with `es`              |
+| `docs/localization.md`           | Localization rollout and editorial instructions        |
 
 To add a document type, follow the `Post` folder pattern: create
 `schemaTypes/schemas/<Name>/<name>Type.ts` and `index.ts`, then register the

@@ -29,12 +29,12 @@ When adding a new content/document type, follow the existing `Post` folder patte
 
 ## Localization
 
-- `post.language` is required, read-only in the editor, and restricted to `es` / `en`. New standalone posts default to Spanish; previews show the document language.
-- Create English translations through the internationalization plugin so they remain linked to their Spanish originals. Copies require editorial translation and review, and each language is published independently.
-- Slugs are unique within each language, excluding the current document's published and draft IDs. Missing language is treated as Spanish during rollout. Slugs reject reserved application paths (listed in the schema and audit script), `/`, and `.`; keep schema validation and audit rules aligned.
+- `post.language` is required and restricted to `es` / `en`. New standalone posts default to Spanish. `LanguageInput` enables selection before publication and for legacy posts without an assigned language; it locks the field while loading or when a published version already has `es` / `en`, including during draft edits. Unpublishing removes this current-publication lock. Previews show the document language.
+- Create Spanish and English posts independently using the Language dropdown. Counterparts are optional. The internationalization plugin can still create linked translations for SEO; copies require editorial translation and review, and each language is published independently.
+- Slugs are unique within each language, excluding the current document's published and draft IDs. Slug validation and the audit still treat missing language as Spanish for legacy conflict detection; the website hides posts without an explicit supported language. Slugs reject reserved application paths (listed in the schema and audit script), `/`, and `.`; keep schema validation and audit rules aligned.
 - `scripts/audit-i18n.ts` checks unsupported languages, missing/reserved slugs, and duplicate slugs per language, treating a draft and its published document as the same identity.
 - `migrations/mark-posts-spanish/index.ts` sets only missing post languages to `es`, including drafts. It is safe to rerun and preserves IDs, slugs, content, assets, and publication state.
-- Follow `docs/localization.md` for the rollout sequence: audit and resolve conflicts, export a backup, review and apply the migration, build/deploy the Studio, publish a reviewed linked translation, then deploy and verify the separate website. Website routing, language filtering, and message dictionaries are maintained outside this repo.
+- Follow `docs/localization.md` for the rollout sequence: audit and resolve conflicts, export a backup, review and apply the migration, build/deploy the Studio, publish a reviewed post in the selected language, then deploy and verify the separate website. Switching website language always opens that language homepage. Website routing, language filtering, and message dictionaries are maintained outside this repo.
 
 ## Configuration & secrets
 
