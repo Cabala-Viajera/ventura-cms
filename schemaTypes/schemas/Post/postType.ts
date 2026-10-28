@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {LanguageInput} from './LanguageInput'
 
 const postType = defineType({
   name: 'post',
@@ -16,7 +17,9 @@ const postType = defineType({
       name: 'language',
       title: 'Language',
       type: 'string',
-      readOnly: true,
+      description:
+        'Choose the language before publishing. Published posts keep their language to preserve their URL.',
+      components: {input: LanguageInput},
       options: {
         list: [
           {title: 'Español', value: 'es'},
