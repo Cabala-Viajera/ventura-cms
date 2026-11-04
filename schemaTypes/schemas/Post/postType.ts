@@ -104,6 +104,7 @@ const postType = defineType({
       name: 'content',
       type: 'array',
       of: [
+        {type: 'alert'},
         {
           type: 'block',
         },
